@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            text-transform: capitalize;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            box-sizing: border-box;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: linear-gradient(to bottom, pink, lightyellow, skyblue, lavender);
+        }
+
+        .main_game {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            flex-wrap: wrap;
+            width: 420px;
+            height: 420px;
+            box-shadow: 0px 0px 20px 6px rgba(0, 0, 0, 0.673);
+            border-radius: 8px;
+        }
+
+        .button {
+            width: 130px;
+            height: 130px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            background-color: rgb(240, 130, 240);
+        }
+
+        .button:hover {
+            cursor: pointer;
+            background-color: #f059b6;
+        }
+
+        .buttons {
+            margin-top: 30px;
+        }
+
+        .buttons button {
+            cursor: pointer;
+            font-size: 22px;
+            padding: 5px 15px;
+            border-radius: 20px;
+            border: 3px solid rgb(75, 169, 206);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="main_game">
+            <div class="button"></div>
+            <div class="button"></div>
+            <div class="button"></div>
+            <div class="button"></div>
+            <div class="button"></div>
+            <div class="button"></div>
+            <div class="button"></div>
+            <div class="button"></div>
+            <div class="button"></div>
+        </div>
+
+        <div class="buttons">
+            <button id="restart">restart</button>
+        </div>
+
+    </div>
+
+    <script>
+        const btns = document.querySelectorAll(".button");
+        let turn = "X";
+        let x = [];
+ 
+        const win = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
+            [2, 4, 6]
+        ];
+
+        btns.forEach((box, index) => {
+            box.addEventListener('click', function type() {
+
+                box.innerHTML = `${turn}`;
+                x.push(index);
+
+                changeTurn();
+
+                document.getElementById("restart").addEventListener("click", () => {
+                    box.innerHTML = "";
+                    turn = "X"
+                    box.addEventListener('click', type)
+                })
+
+                if (box.innerHTML != "") {
+                    box.removeEventListener("click", type);
+                }
+                for (const pattern of win) {
+                    const first = btns[pattern[0]].innerText;
+                    const second = btns[pattern[1]].innerText;
+                    const third = btns[pattern[2]].innerText;
+                    if(first != '' && second != '' && third != ''){
+                        // console.log('first if')
+                        if(first == second && second == third){
+                            alert(`${first} win`)
+                        }
+                    }
+                }
+            })
+        })
+
+        function changeTurn() {
+            if (turn === "X") {
+                turn = "O";
+            }
+            else {
+                turn = "X";
+            }
+        }
+
+
+
+
+    </script>
+
+</body>
+
+</html>
